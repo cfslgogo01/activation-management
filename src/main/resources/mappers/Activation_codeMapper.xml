@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.cs.database.activatemanage.dao.Activation_codeMapper">
+    <insert id="insert">
+        INSERT INTO `Activation_code`(code_num, activation_code)
+        VALUES (#{code_num}, #{activation_code})
+    </insert>
+    <select id="getCount" resultType="java.lang.Integer">
+        select count(*)
+        from `Activation_code`
+    </select>
+
+
+</mapper>

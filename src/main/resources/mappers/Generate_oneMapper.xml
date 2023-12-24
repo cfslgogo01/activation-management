@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.cs.database.activatemanage.dao.Generate_oneMapper">
+    <insert id="insert">
+        insert into Generate_one(generate1_num, root_num, code_num, adminlog_num)
+        VALUES (#{generate1_num}, #{root_num}, #{code_num}, #{adminlog_num})
+    </insert>
+    <select id="getCount" resultType="java.lang.Integer">
+        select count(*)
+        from Generate_one
+    </select>
+
+
+</mapper>

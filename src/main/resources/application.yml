@@ -1,0 +1,23 @@
+server:
+  port: 8088
+  ssl:
+    key-store: classpath:manager.iroiyxin.cn.pfx
+    key-store-password: ozjwc7ck23e0
+    keyStoreType: PKCS12
+
+mybatis:
+  mapper-locations: classpath:mappers/*.xml,classpath:mappers/server/*.xml
+
+spring:
+  datasource:
+    name: test
+#    url: jdbc:mysql://www.iroiyxin.cn:3306/activation-management?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+    url: jdbc:mysql://127.0.0.1:3306/activation-management?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+#    url: jdbc:mysql://localhost:3306/manager?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+#    username: root
+    username: root
+#    password: 123456
+    password: nby000
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+

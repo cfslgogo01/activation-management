@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.cs.database.activatemanage.dao.server.QuerySecondAuthorizationDAO">
+    <select id="getSecondAuthorization" resultType="java.util.Map">
+        SELECT `Initiate`.initiate_num,
+               `Initiate`.admin_num_one,
+               `Change`.c_type_num,
+               `Change`.old_value,
+               `Change`.new_value,
+               `Activate_info`.activation_code,
+               `Activate_info`.ainfo_num,
+               `Activate_info`.start_time,
+               `Activate_info`.is_work,
+               `Admin_logs`.adminlog_date,
+               `Function`.func_num,
+               `Function`.func_name
+        FROM `Initiate`,
+             `Change`,
+             `Activate_info`,
+             `Admin_logs`,
+             `Function`,
+             `Activation`
+        WHERE `Initiate`.change_num = `Change`.change_num
+          AND `Change`.ainfo_num = `Activate_info`.ainfo_num
+          AND `Initiate`.adminlog_num = `Admin_logs`.adminlog_num
+          AND `Initiate`.admin_num_two IS NULL
+          and `Activation`.ainfo_num = `Activate_info`.ainfo_num
+          AND `Activation`.func_num = `Function`.func_num;
+
+    </select>
+
+
+</mapper>

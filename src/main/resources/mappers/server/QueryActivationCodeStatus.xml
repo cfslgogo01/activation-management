@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.cs.database.activatemanage.dao.server.QueryActivationCodeStatusDAO">
+
+
+    <select id="getActivatedActivationCodeStatusByuser_numAndactivation_code" resultType="java.util.Map">
+        SELECT `Function`.func_name,
+               `Function`.func_num,
+               `Activation`.activation_num,
+               `Activate_info`.ainfo_num,
+               `Generate_one`.root_num,
+               `Generate_two`.admin_num,
+               `Activate_info`.start_time,
+               `Activate_info`.valid_time_num,
+               `Activate_info`.expiration_time
+        FROM `Function`,
+             `Activation_code`,
+             `Activation`,
+             `Activate_info`,
+             `Generate_one`,
+             `Generate_two`
+        WHERE `Activation`.user_num = #{user_num}
+          AND `Activation`.ainfo_num = `Activate_info`.ainfo_num
+          AND `Activation`.func_num = `Function`.func_num
+          AND `Activation`.code_num = `Activation_code`.code_num
+          AND `Activate_info`.is_work = 'true'
+          AND `Activate_info`.start_time IS NOT NULL
+          AND (
+                `Generate_one`.code_num = `Activation_code`.code_num
+                OR `Generate_two`.code_num = `Activation_code`.code_num
+            )
+          AND `Activation_code`.activation_code = #{activation_code}
+    </select>
+    <select id="getActivationCodeStatusByactivation_code" resultType="java.util.Map">
+        (SELECT `Activation`.user_num,
+                `Activate_info`.activation_code,
+                `Function`.func_name,
+                `Function`.func_num,
+                `Activation`.activation_num,
+                `Activate_info`.ainfo_num,
+                `Generate_one`.root_num AS admin_num,
+                `Activate_info`.start_time,
+                `Activate_info`.valid_time_num,
+                `Activate_info`.expiration_time
+         FROM `Function`,
+              `Activation_code`,
+              `Activation`,
+              `Activate_info`,
+              `Generate_one`
+         WHERE `Activation`.ainfo_num = Activate_info.ainfo_num
+           AND `Activation`.func_num = `Function`.func_num
+           AND `Activation`.code_num = `Activation_code`.code_num
+           AND `Generate_one`.code_num = `Activation_code`.code_num
+           AND `Activation_code`.activation_code = #{activation_code}
+        )
+        UNION
+        (
+            SELECT `Activation`.user_num,
+                   `Activate_info`.activation_code,
+                   `Function`.func_name,
+                   `Function`.func_num,
+                   `Activation`.activation_num,
+                   `Activate_info`.ainfo_num,
+                   `Generate_two`.admin_num AS admin_num,
+                   `Activate_info`.start_time,
+                   `Activate_info`.valid_time_num,
+                   `Activate_info`.expiration_time
+            FROM `Function`,
+                 `Activation_code`,
+                 `Activation`,
+                 `Activate_info`,
+                 `Generate_two`
+            WHERE `Activation`.ainfo_num = `Activate_info`.ainfo_num
+              AND `Activation`.func_num = `Function`.func_num
+              AND `Activation`.code_num = `Activation_code`.code_num
+              AND `Generate_two`.code_num = `Activation_code`.code_num
+              AND `Activation_code`.activation_code = #{activation_code}
+        )
+    </select>
+    <select id="getActivationCodeStatusByuser_num" resultType="java.util.Map">
+        (SELECT `Activation`.user_num,
+                `Activate_info`.activation_code,
+                `Function`.func_name,
+                `Function`.func_num,
+                `Activation`.activation_num,
+                `Activate_info`.ainfo_num,
+                `Generate_one`.root_num AS admin_num,
+                `Activate_info`.start_time,
+                `Activate_info`.valid_time_num,
+                `Activate_info`.expiration_time
+         FROM `Function`,
+              `Activation_code`,
+              `Activation`,
+              `Activate_info`,
+              `Generate_one`
+         WHERE `Activation`.ainfo_num = `Activate_info`.ainfo_num
+           AND `Activation`.func_num = `Function`.func_num
+           AND `Activation`.code_num = `Activation_code`.code_num
+           AND `Generate_one`.code_num = `Activation_code`.code_num
+           AND `Activation`.user_num = #{user_num}
+        )
+        UNION
+        (
+            SELECT `Activation`.user_num,
+                   `Activate_info`.activation_code,
+                   `Function`.func_name,
+                   `Function`.func_num,
+                   `Activation`.activation_num,
+                   `Activate_info`.ainfo_num,
+                   `Generate_two`.admin_num AS admin_num,
+                   `Activate_info`.start_time,
+                   `Activate_info`.valid_time_num,
+                   `Activate_info`.expiration_time
+            FROM `Function`,
+                 `Activation_code`,
+                 `Activation`,
+                 `Activate_info`,
+                 `Generate_two`
+            WHERE `Activation`.ainfo_num = `Activate_info`.ainfo_num
+              AND `Activation`.func_num = `Function`.func_num
+              AND `Activation`.code_num = `Activation_code`.code_num
+              AND `Generate_two`.code_num = `Activation_code`.code_num
+              AND `Activation`.user_num = #{user_num}
+        )
+    </select>
+
+
+</mapper>

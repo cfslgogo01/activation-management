@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.cs.database.activatemanage.dao.Activate_infoMapper">
+    <insert id="insert">
+        INSERT INTO `Activate_info`(ainfo_num, code_num, activation_code, start_time_num, start_time, valid_time_num,
+                                    expiration_time_num, expiration_time, is_work)
+        VALUES (#{ainfo_num}, #{code_num}, #{activation_code}, #{start_time_num}, #{start_time}, #{valid_time_num},
+                #{expiration_time_num},
+                #{expiration_time}, #{is_work})
+    </insert>
+    <insert id="insertOnce">
+        INSERT INTO `Activate_info`(ainfo_num, code_num, activation_code, start_time_num, start_time, valid_time_num,
+                                    expiration_time_num, expiration_time, is_work)
+        VALUES (#{ainfo_num}, #{code_num}, #{activation_code}, NULL, NULL, #{valid_time_num},
+                NULL,
+                NULL, #{is_work})
+    </insert>
+    <insert id="insertOnceDefault">
+        INSERT INTO `Activate_info`(ainfo_num, code_num, activation_code, start_time_num, start_time, valid_time_num,
+                                     is_work)
+        VALUES (#{ainfo_num}, #{code_num}, #{activation_code}, NULL, NULL, #{valid_time_num},
+                NULL,
+                NULL, #{is_work})
+    </insert>
+    <update id="setvalid_time_numForActivate_infoByainfo_num">
+        update `Activate_info`
+        set `Activate_info`.valid_time_num = #{valid_time_num}
+        where `Activate_info`.ainfo_num = #{ainfo_num}
+    </update>
+    <update id="setis_workForActivate_infoByainfo_num">
+        update `Activate_info`
+        set `Activate_info`.is_work = #{is_work}
+        where `Activate_info`.ainfo_num = #{ainfo_num}
+    </update>
+    <update id="setstart_timeForActivate_infoByainfo_num">
+        update `Activate_info`
+        set `Activate_info`.start_time = #{start_time}
+        where `Activate_info`.ainfo_num = #{ainfo_num}
+        ;
+    </update>
+    <update id="setstart_time_numForActivate_infoByainfo_num">
+        update `Activate_info`
+        set `Activate_info`.start_time_num =#{start_time_num}
+        where `Activate_info`.ainfo_num = #{ainfo_num}
+        ;
+    </update>
+    <select id="getCount" resultType="java.lang.Integer">
+        select count(*)
+        from `Activate_info`;
+    </select>
+
+</mapper>

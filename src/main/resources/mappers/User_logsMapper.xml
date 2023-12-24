@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.cs.database.activatemanage.dao.User_logsMapper">
+
+
+    <select id="getAll" resultType="cn.edu.cs.database.activatemanage.entity.User_logs">
+        select *
+        from `User_logs`;
+    </select>
+    <select id="getCount" resultType="java.lang.Integer">select count(*)
+                                                         from `User_logs`</select>
+    <select id="getUser_logsByuser_num" resultType="cn.edu.cs.database.activatemanage.entity.User_logs">
+        select *
+        from `User_logs`
+        where user_num = #{user_num}
+    </select>
+
+    <insert id="insert">INSERT INTO `User_logs`(userlog_num, userlog_type, user_num, userlog_result, userlog_date)
+                        values (#{userlog_num}, #{userlog_type}, #{user_num}, #{userlog_result},
+                                #{userlog_date})</insert>
+
+</mapper>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.cs.database.activatemanage.dao.Admin_logsMapper">
+    <insert id="insert">
+        INSERT INTO `Admin_logs`(adminlog_num, adminlog_type, admin_num, adminlog_result, adminlog_date)
+        VALUES (#{adminlog_num}, #{adminlog_type}, #{admin_num}, #{adminlog_result}, #{adminlog_date})
+    </insert>
+    <select id="getAll" resultType="cn.edu.cs.database.activatemanage.entity.Admin_logs">
+        SELECT *
+        from `Admin_logs`;
+    </select>
+    <select id="getConAdminLogs" resultType="cn.edu.cs.database.activatemanage.entity.Admin_logs">
+        select *
+        from `Admin_logs`
+        where `Admin_logs`.`admin_num` not in (select `Root`.`root_num` from `Root`);
+    </select>
+    <select id="getCount" resultType="java.lang.Integer">
+        select count(*)
+        from `Admin_logs`
+    </select>
+
+
+</mapper>

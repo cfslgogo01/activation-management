@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.cs.database.activatemanage.dao.server.QueryFunctionCanBeActivatedDAO">
+    <select id="getFunctionCanBeActivatedByuser_numAndcode_num" resultType="java.util.Map">
+        SELECT `Function`.func_name,
+               `Function`.func_num,
+               `Activation`.activation_num,
+               `Activate_info`.ainfo_num
+        FROM `Function`,
+             `Activation_code`,
+             `Activation`,
+             `Activate_info`
+        WHERE `Activation`.user_num = #{user_num}
+          AND `Activation`.ainfo_num = `Activate_info`.ainfo_num
+          AND `Activation`.func_num = `Function`.func_num
+          AND `Activation`.code_num = `Activation_code`.code_num
+          AND `Activate_info`.is_work like 'true'
+          AND `Activate_info`.start_time IS NULL
+          AND `Activate_info`.start_time_num IS NULL
+          AND `Activate_info`.activation_code = #{activation_code}
+        ;
+    </select>
+</mapper>

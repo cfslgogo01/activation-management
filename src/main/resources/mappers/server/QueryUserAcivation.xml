@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.cs.database.activatemanage.dao.server.QueryUserAcivationDAO">
+    <select id="getUserAcivationByuser_num" resultType="java.util.Map">
+        SELECT `Activation`.activation_num,
+               `Activate_info`.ainfo_num,
+               `Activate_info`.activation_code,
+               `Function`.func_name,
+               `Function`.func_num,
+               `Function`.is_free,
+               `Activate_info`.is_work,
+               `Activate_info`.start_time,
+               `Activate_info`.start_time_num,
+               `Activate_info`.valid_time_num,
+               `Activate_info`.expiration_time_num,
+               `Activate_info`.expiration_time
+        FROM `Activation`,
+             `Activate_info`,
+             `Function`
+        WHERE Activation.func_num = `Function`.func_num
+          AND Activation.ainfo_num = Activate_info.ainfo_num
+          AND Activation.user_num = #{user_num};
+    </select>
+    <select id="getUserAcivationByuser_numAndfunc_num" resultType="java.util.Map">
+        SELECT `Activation`.activation_num,
+               `Activate_info`.ainfo_num,
+               `Activate_info`.activation_code,
+               `Function`.func_name,
+               `Function`.func_num,
+               `Function`.is_free,
+               `Activate_info`.is_work,
+               `Activate_info`.start_time,
+               `Activate_info`.start_time_num,
+               `Activate_info`.valid_time_num,
+               `Activate_info`.expiration_time_num,
+               `Activate_info`.expiration_time
+        FROM `Activation`,
+             `Activate_info`,
+             `Function`
+        WHERE (`Activation`.func_num = #{func_num} AND `Activation`.ainfo_num = `Activate_info`.ainfo_num AND
+               `Activation`.user_num = #{user_num} AND `Function`.is_free = 'false' and `Function`.func_num = #{func_num})
+        UNION
+        SELECT NULL
+                ,
+               NULL,
+               NULL,
+               `Function`.func_name,
+               `Function`.func_num,
+               `Function`.is_free,
+               NULL,
+               NULL,
+               NULL,
+               NULL,
+               NULL,
+               NULL
+        FROM `Function`
+        WHERE (`Function`.is_free = 'true' AND `Function`.func_num = #{func_num})
+        ;
+    </select>
+
+
+</mapper>
